@@ -20,6 +20,6 @@ data class Record(
     val status: String
 ) {
     fun haveWord(word: String): Boolean {
-        return county.contains(word) || pm2_5.contains(word) || siteId.contains(word) || siteName.contains(word) || status.contains(word)
+        return county.contains(word) || pm2_5.contains(word) || siteId.contains(word) || siteName.contains(word)
     }
 }

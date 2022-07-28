@@ -2,12 +2,15 @@ package com.idtech.airpollution.di
 
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.gson.Gson
+import com.idtech.airpollution.MainSharedViewModel
 import com.idtech.airpollution.model.AirPollutionRepository
 import com.idtech.airpollution.model.AirPollutionService
 import com.idtech.airpollution.ui.main.MainViewModel
+import com.idtech.airpollution.utils.ContextUtils
 import com.idtech.airpollution.utils.LoggerInterceptor
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -16,11 +19,12 @@ import java.util.concurrent.TimeUnit
 
 
 val airPollutionModule = module{
-    single { Gson() }
     single { AirPollutionRepository(get(),get()) }
     single { createOkHttpClient() }
     single { createMockWebService<AirPollutionService>(get()) }
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(),get()) }
+    viewModel {MainSharedViewModel()}
+    single {ContextUtils(androidApplication())}
 }
 
 fun createOkHttpClient(): OkHttpClient {

@@ -2,6 +2,7 @@ package com.idtech.airpollution.ui.main.center
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.idtech.airpollution.databinding.ItemCenterListBinding
@@ -10,15 +11,22 @@ import com.idtech.airpollution.model.data.Record
 import com.idtech.airpollution.ui.main.header.DiffCallback
 import com.idtech.airpollution.ui.main.header.ItemHeaderViewModel
 import com.idtech.airpollution.utils.BindingViewHolder
+import com.idtech.airpollution.utils.ContextUtils
 
-class CenterAdapter: ListAdapter<Record, BindingViewHolder<ItemCenterListBinding>>(DiffCallback()) {
+class CenterAdapter(val callback: (record: Record) -> Unit) : ListAdapter<Record, BindingViewHolder<ItemCenterListBinding>>(DiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ItemCenterListBinding> {
         val binding = ItemCenterListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BindingViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder<ItemCenterListBinding>, position: Int) {
-        holder.binding.vm = ItemCenterViewModel(getItem(position))
+        val viewModel = ItemCenterViewModel(getItem(position), ContextUtils(holder.binding.root.context))
+        holder.binding.vm = viewModel
+        holder.binding.root.setOnClickListener {
+            if (viewModel.showArrow) {
+                callback.invoke(viewModel.data)
+            }
+        }
     }
-
 }
+

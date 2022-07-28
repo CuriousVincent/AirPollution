@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AirPollution</string>
+    <string name="status_instead_name">The status is good, we want to go out to have fun</string>
+    <string name="status_good_name">良好</string>
+    <string name="please_input_search">輸入『站名』\n查詢該地區空屋資訊</string>
+    <string name="no_data">找不到『%s』\n相關空屋資訊</string>
 </resources>
