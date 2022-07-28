@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.idtech.airpollution.databinding.MainFragmentBinding
+import com.idtech.airpollution.ui.main.center.CenterAdapter
+import com.idtech.airpollution.ui.main.header.HeaderAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
@@ -15,6 +17,8 @@ class MainFragment : Fragment() {
     }
     private lateinit var binding: MainFragmentBinding
     private val viewModel by viewModel<MainViewModel>()
+    private lateinit var headerAdapter:HeaderAdapter
+    private lateinit var centerAdapter:CenterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +33,26 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+        initObserver()
         viewModel.getApi()
+    }
+
+    fun initView(){
+        headerAdapter = HeaderAdapter()
+        centerAdapter = CenterAdapter()
+        binding.rcvHeader.adapter = headerAdapter
+        binding.rcvCenter.adapter = centerAdapter
+    }
+    fun initObserver(){
+        viewModel.apply {
+            setCenterData.observe(viewLifecycleOwner){
+                centerAdapter.submitList(it)
+            }
+            setHeaderData.observe(viewLifecycleOwner){
+                headerAdapter.submitList(it)
+            }
+        }
     }
 
 

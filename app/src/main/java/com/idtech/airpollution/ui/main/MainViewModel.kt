@@ -4,12 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.idtech.airpollution.model.AirPollutionRepository
+import com.idtech.airpollution.model.data.Record
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repo:AirPollutionRepository) : ViewModel() {
-    val text = MutableLiveData<String>("")
+    val setHeaderData = MutableLiveData<ArrayList<Record>>()
+    val setCenterData = MutableLiveData<ArrayList<Record>>()
+    var allData = listOf<Record>()
 
     fun getApi(){
         viewModelScope.launch {
@@ -18,7 +21,9 @@ class MainViewModel(private val repo:AirPollutionRepository) : ViewModel() {
 //                .catch {
 //                    isLoading.postValue(false) }
                 .collect {
-                    text.postValue(it.toString())
+                    allData = it.records
+                    setHeaderData.postValue(repo.getPMLessTen(allData))
+                    setCenterData.postValue(repo.getPMGreaterTen(allData))
                 }
         }
     }
