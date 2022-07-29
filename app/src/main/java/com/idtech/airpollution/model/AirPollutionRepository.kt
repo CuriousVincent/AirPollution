@@ -19,25 +19,41 @@ class AirPollutionRepository(private val services: AirPollutionService, private 
         }
     }
 
-    fun getPMGreaterTen(data: List<Record>): ArrayList<Record> {
-        val result = arrayListOf<Record>()
+//    fun getPMGreaterTen(data: List<Record>): ArrayList<Record> {
+//        val result = arrayListOf<Record>()
+//        data.forEach {
+//            Logger.d("PM 2.5: ${it.pm2_5} siteName: ${it.siteName}")
+//            if (it.pm2_5.isNotEmpty() && it.pm2_5.toInt() > 10) {
+//                result.add(it)
+//            }
+//        }
+//        return result
+//    }
+//
+//    fun getPMLessTen(data: List<Record>): ArrayList<Record> {
+//        val result = arrayListOf<Record>()
+//        data.forEach {
+//            if (it.pm2_5.isNotEmpty() && it.pm2_5.toInt() <= 10) {
+//                result.add(it)
+//            }
+//        }
+//        return result
+//    }
+
+    suspend fun getHeaderAndCenterList(data:List<Record>):Pair<ArrayList<Record>,ArrayList<Record>>{
+        val greaterTenResult = arrayListOf<Record>()
+        val lessTenResult = arrayListOf<Record>()
         data.forEach {
             Logger.d("PM 2.5: ${it.pm2_5} siteName: ${it.siteName}")
-            if (it.pm2_5.isNotEmpty() && it.pm2_5.toInt() > 10) {
-                result.add(it)
+            if(it.pm2_5.isNotBlank()){
+                if (it.pm2_5.toInt() > 10) {
+                    greaterTenResult.add(it)
+                }else{
+                    lessTenResult.add(it)
+                }
             }
         }
-        return result
-    }
-
-    fun getPMLessTen(data: List<Record>): ArrayList<Record> {
-        val result = arrayListOf<Record>()
-        data.forEach {
-            if (it.pm2_5.isNotEmpty() && it.pm2_5.toInt() <= 10) {
-                result.add(it)
-            }
-        }
-        return result
+        return greaterTenResult to lessTenResult
     }
 
     fun searchWordInRecord(data: List<Record>, word: String): ArrayList<Record> {

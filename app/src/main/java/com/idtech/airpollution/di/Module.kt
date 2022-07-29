@@ -1,5 +1,7 @@
 package com.idtech.airpollution.di
 
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.gson.Gson
 import com.idtech.airpollution.MainSharedViewModel
@@ -22,9 +24,10 @@ val airPollutionModule = module{
     single { AirPollutionRepository(get(),get()) }
     single { createOkHttpClient() }
     single { createMockWebService<AirPollutionService>(get()) }
-    viewModel { MainViewModel(get(),get()) }
+    viewModel { MainViewModel(get(),get(),get()) }
     viewModel {MainSharedViewModel()}
     single {ContextUtils(androidApplication())}
+    single {androidApplication().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
 }
 
 fun createOkHttpClient(): OkHttpClient {

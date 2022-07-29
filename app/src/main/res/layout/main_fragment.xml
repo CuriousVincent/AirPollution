@@ -50,7 +50,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingVertical="8dp"
-            android:visibility="@{vm.showHint?View.GONE:View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vDivider"
@@ -74,6 +73,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="@string/no_data"
             />
-
+        <include
+            android:id="@+id/includeLoadingView"
+            layout="@layout/include_loading_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
