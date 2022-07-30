@@ -1,15 +1,18 @@
 package com.idtech.airpollution.ui.main
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.idtech.airpollution.MainActivity
 import com.idtech.airpollution.MainSharedViewModel
 import com.idtech.airpollution.R
 import com.idtech.airpollution.databinding.MainFragmentBinding
+import com.idtech.airpollution.di.createMockWebService
 import com.idtech.airpollution.ui.main.center.CenterAdapter
 import com.idtech.airpollution.ui.main.header.HeaderAdapter
 import com.orhanobut.logger.Logger
@@ -26,6 +29,12 @@ class MainFragment : Fragment() {
     private val sharedViewModel by sharedViewModel<MainSharedViewModel>()
     private lateinit var headerAdapter:HeaderAdapter
     private lateinit var centerAdapter:CenterAdapter
+    private var act: MainActivity? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        act = requireActivity() as MainActivity
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +49,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        act?.setSupportActionBar(binding.toolbar)
         initView()
         initObserver()
         viewModel.getApi()
@@ -81,13 +91,23 @@ class MainFragment : Fragment() {
                     .setPositiveButton(R.string.confirm){_,_-> }
                     .show()
             }
+            setAllData.observe(viewLifecycleOwner){
+                act?.airPollutionService?.apply {
+                    allData = it
+                }
+            }
         }
         sharedViewModel.apply {
             searchWord.observe(viewLifecycleOwner) {
-                viewModel.searchWord(it)
+                act?.airPollutionService?.apply {
+                    viewModel.searchWord(it, allData)
+                }
+
             }
             isSearch.observe(viewLifecycleOwner){
-                viewModel.searchFlow(it)
+                act?.airPollutionService?.apply {
+                    viewModel.searchFlow(it, allData)
+                }
             }
         }
     }

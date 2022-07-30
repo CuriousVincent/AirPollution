@@ -23,9 +23,9 @@ class MainViewModel(private val repo: AirPollutionRepository, private val contex
     val noDataHint = MutableLiveData(contextUtils.getString(R.string.please_input_search))
     val showNetworkErrorDialog = SingleLiveEvent<Unit>()
     val showErrorDialog = SingleLiveEvent<String>()
-    var allData = listOf<Record>()
+    val setAllData = SingleLiveEvent<List<Record>>()
 
-    @OptIn(FlowPreview::class)
+
     fun getApi() {
         viewModelScope.launch {
             flow {
@@ -41,8 +41,8 @@ class MainViewModel(private val repo: AirPollutionRepository, private val contex
                 .flatMapConcat {
                     return@flatMapConcat repo.getAirPollution()
                 }.map {
-                    allData = it.records
-                    return@map repo.getHeaderAndCenterList(allData)
+                    setAllData.postValue(it.records)
+                    return@map repo.getHeaderAndCenterList(it.records)
                 }
                 .flowOn(Dispatchers.IO)
                 .catch { error->
@@ -56,7 +56,7 @@ class MainViewModel(private val repo: AirPollutionRepository, private val contex
         }
     }
 
-    fun searchWord(prefix: String) {
+    fun searchWord(prefix: String,allData:List<Record>) {
         if (prefix.isEmpty()) {
             startSearch()
         } else {
@@ -70,11 +70,11 @@ class MainViewModel(private val repo: AirPollutionRepository, private val contex
         }
     }
 
-    fun searchFlow(isSearch: Boolean) {
+    fun searchFlow(isSearch: Boolean,allData:List<Record>) {
         if (isSearch) {
             startSearch()
         } else {
-            closeSearch()
+            closeSearch(allData)
         }
     }
 
@@ -96,7 +96,7 @@ class MainViewModel(private val repo: AirPollutionRepository, private val contex
         showHint.value = false
     }
 
-    private fun closeSearch() {
+    private fun closeSearch(allData:List<Record>) {
         viewModelScope.launch {
             isLoading.value = true
             flow {

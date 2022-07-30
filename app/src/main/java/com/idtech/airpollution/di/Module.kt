@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.idtech.airpollution.MainSharedViewModel
 import com.idtech.airpollution.model.AirPollutionRepository
 import com.idtech.airpollution.model.AirPollutionService
+import com.idtech.airpollution.service.AirPollutionPresenter
 import com.idtech.airpollution.ui.main.MainViewModel
 import com.idtech.airpollution.utils.ContextUtils
 import com.idtech.airpollution.utils.LoggerInterceptor
@@ -28,6 +29,7 @@ val airPollutionModule = module{
     viewModel {MainSharedViewModel()}
     single {ContextUtils(androidApplication())}
     single {androidApplication().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
+    factory{ AirPollutionPresenter(get())}
 }
 
 fun createOkHttpClient(): OkHttpClient {
