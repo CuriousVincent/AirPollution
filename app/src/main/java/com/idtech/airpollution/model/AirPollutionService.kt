@@ -1,6 +1,5 @@
 package com.idtech.airpollution.model
 
-import com.google.gson.JsonObject
 import com.idtech.airpollution.model.data.AirPollutionData
 import retrofit2.http.GET
 

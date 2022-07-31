@@ -3,21 +3,20 @@ package com.idtech.airpollution.ui.main
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.idtech.airpollution.MainActivity
 import com.idtech.airpollution.MainSharedViewModel
 import com.idtech.airpollution.R
 import com.idtech.airpollution.databinding.MainFragmentBinding
-import com.idtech.airpollution.di.createMockWebService
 import com.idtech.airpollution.ui.main.center.CenterAdapter
 import com.idtech.airpollution.ui.main.header.HeaderAdapter
 import com.orhanobut.logger.Logger
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 

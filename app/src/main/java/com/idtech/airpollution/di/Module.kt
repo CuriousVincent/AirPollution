@@ -2,8 +2,6 @@ package com.idtech.airpollution.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.google.gson.Gson
 import com.idtech.airpollution.MainSharedViewModel
 import com.idtech.airpollution.model.AirPollutionRepository
 import com.idtech.airpollution.model.AirPollutionService

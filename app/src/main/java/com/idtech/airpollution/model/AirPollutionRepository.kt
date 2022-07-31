@@ -1,7 +1,5 @@
 package com.idtech.airpollution.model
 
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.idtech.airpollution.R
 import com.idtech.airpollution.model.data.AirPollutionData
 import com.idtech.airpollution.model.data.Record
@@ -19,28 +17,7 @@ class AirPollutionRepository(private val services: AirPollutionService, private 
         }
     }
 
-//    fun getPMGreaterTen(data: List<Record>): ArrayList<Record> {
-//        val result = arrayListOf<Record>()
-//        data.forEach {
-//            Logger.d("PM 2.5: ${it.pm2_5} siteName: ${it.siteName}")
-//            if (it.pm2_5.isNotEmpty() && it.pm2_5.toInt() > 10) {
-//                result.add(it)
-//            }
-//        }
-//        return result
-//    }
-//
-//    fun getPMLessTen(data: List<Record>): ArrayList<Record> {
-//        val result = arrayListOf<Record>()
-//        data.forEach {
-//            if (it.pm2_5.isNotEmpty() && it.pm2_5.toInt() <= 10) {
-//                result.add(it)
-//            }
-//        }
-//        return result
-//    }
-
-    suspend fun getHeaderAndCenterList(data:List<Record>):Pair<ArrayList<Record>,ArrayList<Record>>{
+    fun getHeaderAndCenterList(data:List<Record>):Pair<ArrayList<Record>,ArrayList<Record>>{
         val greaterTenResult = arrayListOf<Record>()
         val lessTenResult = arrayListOf<Record>()
         data.forEach {
@@ -66,7 +43,7 @@ class AirPollutionRepository(private val services: AirPollutionService, private 
         return result
     }
 
-    fun statusHaveWord(record: Record, word: String) =
+    private fun statusHaveWord(record: Record, word: String) =
         (record.status == contextUtils.getString(R.string.status_good_name) && contextUtils.getString(R.string.status_instead_name).contains(word)) || record.status.contains(word)
 
 }

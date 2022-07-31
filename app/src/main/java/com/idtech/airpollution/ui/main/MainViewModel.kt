@@ -10,7 +10,6 @@ import com.idtech.airpollution.model.data.Record
 import com.idtech.airpollution.utils.ContextUtils
 import com.idtech.airpollution.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

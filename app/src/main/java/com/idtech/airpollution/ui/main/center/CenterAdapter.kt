@@ -2,14 +2,10 @@ package com.idtech.airpollution.ui.main.center
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.idtech.airpollution.databinding.ItemCenterListBinding
-import com.idtech.airpollution.databinding.ItemHeaderListBinding
 import com.idtech.airpollution.model.data.Record
 import com.idtech.airpollution.ui.main.header.DiffCallback
-import com.idtech.airpollution.ui.main.header.ItemHeaderViewModel
 import com.idtech.airpollution.utils.BindingViewHolder
 import com.idtech.airpollution.utils.ContextUtils
 
