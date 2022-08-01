@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 class AirPollutionPresenter(val repository: AirPollutionRepository, private val uiContext: CoroutineContext = Dispatchers.Main) : CoroutineScope {
 
     private var timer: Timer = Timer()
-    private val interval = 60 * 1000L
+    private val interval = 600 * 1000L
     val setAllData = SingleLiveEvent<List<Record>>()
 
     override val coroutineContext: CoroutineContext
